@@ -1,3 +1,4 @@
+[![Go](https://github.com/rentifly/nilvalidator/actions/workflows/go.yml/badge.svg)](https://github.com/rentifly/nilvalidator/actions/workflows/go.yml)
 # nilvalidator
 
 `nilvalidator` is a minimalistic Go library for validating struct fields using the tag `nilvalidator:"notnil"`.
