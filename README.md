@@ -1,7 +1,7 @@
 [![Go](https://github.com/rentifly/nilvalidator/actions/workflows/go.yml/badge.svg)](https://github.com/rentifly/nilvalidator/actions/workflows/go.yml)
 # nilvalidator
 
-`nilvalidator` is a minimalistic Go library for validating struct fields using the tag `nilvalidator:"notnil"`.
+`nilvalidator` is a minimalistic Go library for validating struct fields using the tag `nilvalidator:"required"`.
 
 It is useful for checking that required dependencies are not nil, especially during initialization.
 
@@ -26,9 +26,9 @@ import (
 )
 
 type Deps struct {
-	Logger *LoggerType `nilvalidator:"notnil"`
+	Logger *LoggerType `nilvalidator:"required"`
 	Email  string       // not validated
-	Store  StoreIface   `nilvalidator:"notnil"`
+	Store  StoreIface   `nilvalidator:"required"`
 }
 
 func main() {
@@ -45,7 +45,7 @@ func main() {
 
 ## ✅ Behavior
 
-Only fields tagged with `nilvalidator:"notnil"` are checked.
+Only fields tagged with `nilvalidator:"required"` are checked.
 
 The following kinds are supported:
 
