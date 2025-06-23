@@ -9,24 +9,34 @@ const tagKey = "nilvalidator"
 
 func ValidateStructNotNil(v any) error {
 	val := reflect.ValueOf(v)
-	typ := reflect.TypeOf(v)
+
+	if val.Kind() == reflect.Ptr {
+		if val.IsNil() {
+			return fmt.Errorf("ValidateStructNotNil: nil pointer")
+		}
+		val = val.Elem()
+	}
 
 	if val.Kind() != reflect.Struct {
 		return fmt.Errorf("ValidateStructNotNil: expected struct, got %s", val.Kind())
 	}
 
+	typ := val.Type()
 	for i := 0; i < val.NumField(); i++ {
 		field := val.Field(i)
 		fieldType := typ.Field(i)
 
-		if tag := fieldType.Tag.Get(tagKey); tag != "notnil" {
+		if fieldType.Tag.Get(tagKey) != "notnil" {
 			continue
 		}
 
-		kind := field.Kind()
-		if (kind == reflect.Interface || kind == reflect.Ptr || kind == reflect.Slice ||
-			kind == reflect.Map || kind == reflect.Func || kind == reflect.Chan) && field.IsNil() {
-			return fmt.Errorf("field '%s' is nil", fieldType.Name)
+		switch field.Kind() {
+		case reflect.Interface, reflect.Ptr, reflect.Map, reflect.Slice, reflect.Func, reflect.Chan:
+			if field.IsNil() {
+				return fmt.Errorf("field '%s' is nil", fieldType.Name)
+			}
+		default:
+			continue
 		}
 	}
 
