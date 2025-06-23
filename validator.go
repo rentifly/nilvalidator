@@ -26,7 +26,7 @@ func ValidateStructNotNil(v any) error {
 		field := val.Field(i)
 		fieldType := typ.Field(i)
 
-		if fieldType.Tag.Get(tagKey) != "notnil" {
+		if fieldType.Tag.Get(tagKey) != "required" {
 			continue
 		}
 

@@ -7,8 +7,8 @@ import (
 )
 
 type testDeps struct {
-	A *int        `nilvalidator:"notnil"`
-	B interface{} `nilvalidator:"notnil"`
+	A *int        `nilvalidator:"required"`
+	B interface{} `nilvalidator:"required"`
 	C string
 }
 
